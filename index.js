@@ -1,4 +1,6 @@
 require("dotenv").config();
+const path = require("path");
+
 const express = require("express");
 const server = express();
 const mongoose = require("mongoose");
@@ -25,17 +27,14 @@ const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const { isAuth, sanitizeUser, cookieExtractor } = require("./Services/common");
-
-const path = require("path");
-
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 server.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    credentials: true,
+    // credentials: true,
 
-    origin: ["http://localhost:3000"],
+    // origin: ["http://localhost:3000"],
   })
 );
 
