@@ -39,7 +39,7 @@ server.use(
   })
 ); 
 
-//middlewares to use
+//middlewares to use in the index .js 
 server.use(express.static(path.resolve(__dirname, "build")));
 server.use(cookieParser());
 server.use(
