@@ -60,7 +60,12 @@ server.use("/brands", isAuth(), brandsRouter.router);
 server.use("/users", isAuth(), usersRouter.router);
 server.use("/auth", authRouter.router);
 server.use("/cart", isAuth(), cartRouter.router);
+// this /order is clashing with react /orders
 server.use("/orders", isAuth(), ordersRouter.router);
+// This line we add to make react router work in case of other routes doesn't match
+server.get("*", (req, res) =>
+  res.sendFile(path.resolve("build", "index.html"))
+);
 
 // passport strategy
 passport.use(
@@ -152,7 +157,7 @@ const stripe = require("stripe")(process.env.STRIPE_SERVER_KEY);
 // };
 
 server.post("/create-payment-intent", async (req, res) => {
-  const { totalAmount } = req.body;
+  const { totalAmount, orderId } = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -161,6 +166,10 @@ server.post("/create-payment-intent", async (req, res) => {
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
       enabled: true,
+    },
+    metadata: {
+      orderId, // This info will goto stripe => and then to our webhook
+      //  so we can conclude that payment was successfull, even if client closes window after payf
     },
   });
 
