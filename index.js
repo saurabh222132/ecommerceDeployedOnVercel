@@ -37,9 +37,9 @@ server.use(
 
     // origin: ["http://localhost:3000"],
   })
-);
+); 
 
-//middlewares
+//middlewares to use
 server.use(express.static(path.resolve(__dirname, "build")));
 server.use(cookieParser());
 server.use(
