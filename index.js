@@ -33,13 +33,13 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY;
 server.use(
   cors({
     exposedHeaders: ["X-Total-Count"],
-    // credentials: true,
+    credentials: true,
 
     // origin: ["http://localhost:3000"],
   })
-); 
+);
 
-//middlewares to use in the index .js 
+//middlewares
 server.use(express.static(path.resolve(__dirname, "build")));
 server.use(cookieParser());
 server.use(

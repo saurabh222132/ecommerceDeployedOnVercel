@@ -1,8 +1,9 @@
+require("dotenv").config();
 const { constants } = require("buffer");
 const { sanitizeUser } = require("../Services/common");
 const { User } = require("../model/User");
 const crypto = require("crypto");
-const SECRET_KEY = "SECRET_KEY";
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 const jwt = require("jsonwebtoken");
 
 exports.createUser = async (req, res) => {
